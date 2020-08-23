@@ -1,10 +1,10 @@
-import { timeStamp } from "console"
 
 const w : number = window.innerWidth 
 const h : number = window.innerHeight
 const parts : number = 4 
 const delay : number = 20 
 const scGap : number = 0.02 / parts 
+const sizeFactor : number = 10
 const strokeFactor : number = 90
 const backColor : string = "#bdbdbd"
 const colors : Array<string> = ["#F44336", "#4CAF50", "#2196F3", "#FF5722", "#009688"] 
@@ -40,10 +40,10 @@ class ScaleUtil {
         const sf3 : number = ScaleUtil.divideScale(sf, 2, parts)
         const sf4 : number = ScaleUtil.divideScale(sf, 3, parts)
         const y : number = h - h * 0.5 * sf2 
-        const size : number = w / parts  
-        DrawingUtil.drawCircle(context, size / 2 + (w - size / 2) * sf4, y - size / 2, size * 0.5 * sf1)
+        const size : number = w / sizeFactor  
+        DrawingUtil.drawCircle(context, size / 2 + (w - size) * sf4, y - size / 2, size * 0.5 * sf1)
         context.fillRect(0, y, size, h * 0.5 * sf2)
-        context.fillRect(size, h * 0.5, (w - size) * sf3, h * 0.5)
+        context.fillRect(size, h - h * 0.5 * sf3, (w - size), h * 0.5 * sf3)
     }
 
     static drawBRCNode(context : CanvasRenderingContext2D, i : number, scale : number) {
