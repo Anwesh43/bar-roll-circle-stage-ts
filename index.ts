@@ -56,6 +56,7 @@ class ScaleUtil {
 
     canvas : HTMLCanvasElement = document.createElement('canvas')
     context : CanvasRenderingContext2D
+    renderer : Renderer = new Renderer()
     
     initCanvas() {
         this.canvas.width = w 
@@ -67,11 +68,14 @@ class ScaleUtil {
     render() {
         this.context.fillStyle = backColor 
         this.context.fillRect(0, 0, w, h)
+        this.renderer.render(this.context)
     }
 
     handleTap() {
         this.canvas.onmousedown = () => {
-
+            this.renderer.handleTap(() => {
+                this.render()
+            })
         }
     }
 
@@ -195,7 +199,7 @@ class ScaleUtil {
  class Renderer {
 
     animator : Animator = new Animator()
-    brc : BarRollCircle = new BarRollCircle(0)
+    brc : BarRollCircle = new BarRollCircle()
 
     render(context : CanvasRenderingContext2D) {
         this.brc.draw(context)
