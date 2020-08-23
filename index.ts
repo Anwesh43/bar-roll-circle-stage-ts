@@ -191,3 +191,25 @@ class ScaleUtil {
         this.curr.startUpdating(cb)
     }
  }
+
+ class Renderer {
+
+    animator : Animator = new Animator()
+    brc : BarRollCircle = new BarRollCircle(0)
+
+    render(context : CanvasRenderingContext2D) {
+        this.brc.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.brc.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.brc.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+ }
